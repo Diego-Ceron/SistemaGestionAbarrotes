@@ -68,8 +68,26 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 | RNF3 | El sistema debe responder a consultas y operaciones en un tiempo menor a 2 segundos bajo condiciones normales de uso. |
 | RNF4 | El sistema debe estar estructurado de manera modular para facilitar su mantenimiento y futuras mejoras. |
 
-## Diagramas y recursos
+## Diagramas UML
 
-Aquí se pueden añadir enlaces a carpetas o archivos con diagramas y otros recursos del proyecto:
+### Diagrama de Casos de Uso
+![Diagrama de Casos de Uso](docs/uml/imagenes/DiagramaCasosUso.png)
 
-- [Diagramas](docs/diagramas)
+### Diagrama de Actividad
+![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
+
+### Diagrama de Clases
+![Diagrama de Clases](docs/uml/imagenes/DiagramaClase.png)
+
+### Diagrama de Clases (Base de Datos)
+![Diagrama de Clases DB](docs/uml/imagenes/DiagramaClaseDB.png)
+
+### Diagrama de Clases de Venta
+![Diagrama de Clases Venta](docs/uml/imagenes/DiagramaClaseVenta.png)
+
+## Recursos
+
+Aquí se pueden encontrar todos los documentos del proyecto
+
+- [Imágenes de diagramas](docs/uml/imagenes)
+- [Proyecto asta](docs/uml/astah)
