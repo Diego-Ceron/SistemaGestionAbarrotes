@@ -73,9 +73,6 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ### Diagrama de Casos de Uso
 ![Diagrama de Casos de Uso](docs/uml/imagenes/DiagramaCasosUso.png)
 
-### Diagrama de Actividad
-![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
-
 ### Diagrama de Clases
 ![Diagrama de Clases](docs/uml/imagenes/DiagramaClase.png)
 
@@ -84,6 +81,12 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 
 ### Diagrama de Clases de Venta
 ![Diagrama de Clases Venta](docs/uml/imagenes/DiagramaClaseVenta.png)
+
+### Diagrama de Actividad
+![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
+
+### Diagrama de Secuencia
+Se encuentra dentro del proyecto asta
 
 ## Recursos 📌
 
