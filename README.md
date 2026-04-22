@@ -4,7 +4,7 @@
 
 Es una aplicación de software que permite a una tienda de abarrotes gestionar sus operaciones de manera efectiva. Brinda una solución completa para las actividades diarias de la tienda, mejorando la eficiencia, la precisión y la toma de decisiones comerciales.
 
-## Requisitos funcionales 📌
+## <u>Requisitos funcionales 📌</u>
 
 ### Gestión de inventario 📦
 
@@ -59,7 +59,7 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 | RF6.2 | El sistema debe generar reportes del estado actual del inventario. |
 | RF6.3 | El sistema debe generar reportes de análisis de ventas por producto y por categoría. |
 
-## Requisitos no funcionales 📌
+## <u>Requisitos no funcionales 📌</u>
 
 | Num | Requisito |
 |---|---|
@@ -68,7 +68,7 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 | RNF3 | El sistema debe responder a consultas y operaciones en un tiempo menor a 2 segundos bajo condiciones normales de uso. |
 | RNF4 | El sistema debe estar estructurado de manera modular para facilitar su mantenimiento y futuras mejoras. |
 
-## Diagramas UML
+## <u>Diagramas UML 📌</u>
 
 ### Diagrama de Casos de Uso
 ![Diagrama de Casos de Uso](docs/uml/imagenes/DiagramaCasosUso.png)
@@ -85,7 +85,7 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ### Diagrama de Clases de Venta
 ![Diagrama de Clases Venta](docs/uml/imagenes/DiagramaClaseVenta.png)
 
-## Recursos
+## <u>Recursos 📌</u>
 
 Aquí se pueden encontrar todos los documentos del proyecto
 
