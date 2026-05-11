@@ -1,8 +1,6 @@
 package main.java.com.tienda.metodoPago;
 
-import main.java.com.tienda.metodoPago.interfaz.MetodoPago;
-
-public class PagoEfectivo implements MetodoPago {
+public class PagoEfectivo implements IMetodoPago {
     private double montoRecibido;
 
     public double getMontoRecibido() { return montoRecibido; }

@@ -1,6 +1,8 @@
 package com.tienda;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -9,28 +11,28 @@ public class App {
     public static void main(String[] args) {
 
         String url = "jdbc:sqlite:data/tienda.db";
+        Path schemaPath = Path.of("data", "schema.sql");
 
-        try {
-            // Conectar (crea la BD si no existe)
-            Connection conn = DriverManager.getConnection(url);
+        try (Connection conn = DriverManager.getConnection(url)) {
             System.out.println("Base de datos creada/conectada");
 
-            // Crear tabla de prueba
-            Statement stmt = conn.createStatement();
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS productos (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    nombre TEXT
-                );
-            """);
+            if (Files.exists(schemaPath)) {
+                String sql = Files.readString(schemaPath);
+                try (Statement stmt = conn.createStatement()) {
+                    for (String s : sql.split(";")) {
+                        String trimmed = s.trim();
+                        if (!trimmed.isEmpty()) {
+                            stmt.execute(trimmed);
+                        }
+                    }
+                }
+                System.out.println("Esquema inicializado desde: " + schemaPath.toString());
+            } else {
+                System.out.println("schema.sql no encontrado en: " + schemaPath.toString());
+            }
 
-            System.out.println("Tabla 'productos' lista");
-
-            // Mostrar ruta real del archivo
-            File dbFile = new File("tienda.db");
+            File dbFile = new File("data/tienda.db");
             System.out.println("Ruta de la BD: " + dbFile.getAbsolutePath());
-
-            conn.close();
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

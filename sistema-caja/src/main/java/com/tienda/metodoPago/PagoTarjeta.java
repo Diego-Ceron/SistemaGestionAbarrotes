@@ -1,8 +1,6 @@
 package main.java.com.tienda.metodoPago;
 
-import main.java.com.tienda.metodoPago.interfaz.MetodoPago;
-
-public class PagoTarjeta implements MetodoPago {
+public class PagoTarjeta implements IMetodoPago {
     private String numTarjeta;
 
     public String getNumTarjeta() { return numTarjeta; }
