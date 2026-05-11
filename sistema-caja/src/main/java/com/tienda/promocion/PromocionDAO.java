@@ -1,6 +1,7 @@
-package com.tienda.dao;
+package com.tienda.promocion;
 
 import com.tienda.dao.interfaces.IPromocionDAO;
+
 import main.java.com.tienda.promocion.PromocionModel;
 
 public class PromocionDAO implements IPromocionDAO {
