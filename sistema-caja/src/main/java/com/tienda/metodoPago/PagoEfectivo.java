@@ -1,4 +1,4 @@
-package main.java.com.tienda.metodoPago;
+package com.tienda.metodoPago;
 
 public class PagoEfectivo implements IMetodoPago {
     private double montoRecibido;

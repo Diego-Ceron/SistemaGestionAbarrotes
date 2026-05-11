@@ -1,4 +1,4 @@
-package com.tienda.dao.interfaces;
+package com.tienda.promocion;
 
 import main.java.com.tienda.promocion.PromocionModel;
 

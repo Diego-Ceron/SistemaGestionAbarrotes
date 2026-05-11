@@ -1,4 +1,4 @@
-package main.java.com.tienda.metodoPago;
+package com.tienda.metodoPago;
 
 public class PagoTarjeta implements IMetodoPago {
     private String numTarjeta;

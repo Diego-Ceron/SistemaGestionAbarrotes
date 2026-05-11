@@ -1,4 +1,4 @@
-package main.java.com.tienda.inventario;
+package com.tienda.inventario;
 
 import java.util.Date;
 
