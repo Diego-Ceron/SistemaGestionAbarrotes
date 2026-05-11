@@ -1,4 +1,5 @@
-package main.java.com.tienda.model;
+package main.java.com.tienda.venta;
+
 import java.util.Date;
 
 public class VentaModel {

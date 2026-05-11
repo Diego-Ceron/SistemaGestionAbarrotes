@@ -1,6 +1,6 @@
 package com.tienda.dao.interfaces;
 
-import com.tienda.model.PromocionModel;
+import main.java.com.tienda.promocion.PromocionModel;
 
 public interface IPromocionDAO {
     void agregar(PromocionModel p);

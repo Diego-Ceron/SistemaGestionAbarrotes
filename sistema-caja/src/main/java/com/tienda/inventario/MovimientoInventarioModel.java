@@ -1,4 +1,4 @@
-package main.java.com.tienda.model;
+package main.java.com.tienda.inventario;
 
 import java.util.Date;
 

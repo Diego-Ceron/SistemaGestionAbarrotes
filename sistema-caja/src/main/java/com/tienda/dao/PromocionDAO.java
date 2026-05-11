@@ -1,8 +1,7 @@
 package com.tienda.dao;
 
 import com.tienda.dao.interfaces.IPromocionDAO;
-import com.tienda.model.PromocionModel;
-import java.util.List;
+import main.java.com.tienda.promocion.PromocionModel;
 
 public class PromocionDAO implements IPromocionDAO {
     // Aquí irá la conexión a la DB que hizo tu compañero
