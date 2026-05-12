@@ -1,4 +1,4 @@
-package main.java.com.tienda.promocion;
+package com.tienda.promocion;
 
 public class PromocionModel {
     private int id;

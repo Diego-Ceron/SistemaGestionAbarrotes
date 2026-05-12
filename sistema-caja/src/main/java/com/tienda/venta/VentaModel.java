@@ -1,4 +1,4 @@
-package main.java.com.tienda.venta;
+package com.tienda.venta;
 
 import java.util.Date;
 
