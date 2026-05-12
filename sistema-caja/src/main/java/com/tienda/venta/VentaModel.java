@@ -1,5 +1,7 @@
 package com.tienda.venta;
 
+import com.tienda.producto.ProductoModel;
+
 import java.util.Date;
 
 public class VentaModel {
@@ -16,4 +18,7 @@ public class VentaModel {
     public void setId(int id) { this.id = id; }
     public void setFecha(Date fecha) { this.fecha = fecha; }
     public void setTotal(double total) { this.total = total; }
+
+    public ProductoModel[] getProductos() {
+    }
 }

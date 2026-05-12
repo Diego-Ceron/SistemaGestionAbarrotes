@@ -41,7 +41,6 @@ public class MovimientoDAO implements IMovimientoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     MovimientoInventarioModel m = new MovimientoInventarioModel();
-                    m.setId(rs.getInt("id"));
                     m.setFecha(rs.getString("fecha"));
                     m.setTipo(rs.getString("tipo"));
                     m.setCantidad(rs.getInt("cantidad"));

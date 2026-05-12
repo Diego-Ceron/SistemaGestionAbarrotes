@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3526e963-87cc-4fbe-b72e-2c269a3f506a" name="Changes" comment="" />
+    <list default="true" id="3526e963-87cc-4fbe-b72e-2c269a3f506a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/cliente/ClienteController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/inventario/MovimientoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/inventario/MovimientoInventarioModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/inventario/MovimientoInventarioModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/reporte/ReporteModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/reporte/ReporteModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/IVentaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/IVentaDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/VentaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/VentaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/VentaModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/sistema-caja/src/main/java/com/tienda/venta/VentaModel.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -17,6 +33,9 @@
   "associatedIndex": 8
 }]]></component>
   <component name="ProjectId" id="3DbpoDfUlAQOIjNJ8PtldBPQw7O" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

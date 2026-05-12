@@ -1,7 +1,5 @@
 package com.tienda.reporte;
 
-package modelo;
-
 public class ReporteModel {
 
     private int idReporte;
