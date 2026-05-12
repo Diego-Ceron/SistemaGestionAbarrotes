@@ -7,7 +7,8 @@ import com.tienda.producto.ProductoModel;
 
 public class InventarioView {
 
-    // Muestra la lista general de productos en inventario
+    // ===================== PRODUCTOS =====================
+
     public void mostrarProductos(List<ProductoModel> productos) {
         if (productos == null || productos.isEmpty()) {
             System.out.println("No hay productos registrados en el inventario.");
@@ -29,14 +30,58 @@ public class InventarioView {
         System.out.println("==============================================");
     }
 
-    // Muestra alerta cuando un producto tiene stock bajo
+    // Recopila datos para agregar/editar un producto
+    public ProductoModel pedirDatosProducto(Scanner scanner) {
+        ProductoModel p = new ProductoModel();
+        try {
+            System.out.print("Nombre      : "); p.setNombre(scanner.nextLine().trim());
+            System.out.print("Código      : "); p.setCodigo(scanner.nextLine().trim());
+            System.out.print("Precio      : "); p.setPrecio(Double.parseDouble(scanner.nextLine().trim()));
+            System.out.print("Cantidad    : "); p.setCantidad(Integer.parseInt(scanner.nextLine().trim()));
+            System.out.print("Vencimiento (YYYY-MM-DD o vacío): ");
+            String venc = scanner.nextLine().trim();
+            p.setVencimiento(venc.isEmpty() ? null : venc);
+            System.out.print("Descripción : "); p.setDescripcion(scanner.nextLine().trim());
+            System.out.print("Categoría   : "); p.setCategoria(scanner.nextLine().trim());
+            System.out.print("Proveedor   : "); p.setProveedor(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada numérica inválida. Operación cancelada.");
+            return null;
+        }
+        return p;
+    }
+
+    // Pide el ID de un producto
+    public int pedirIdProducto(Scanner scanner) {
+        System.out.print("ID del producto: ");
+        try {
+            return Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("ID inválido.");
+            return -1;
+        }
+    }
+
+    // ===================== STOCK =====================
+
     public void mostrarAlertaStock(ProductoModel p, int umbral) {
-        System.out.println("⚠ ALERTA DE STOCK ⚠");
+        System.out.println("⚠️ ALERTA DE STOCK ⚠️");
         System.out.printf("El producto '%s' (ID: %d) tiene solo %d unidades disponibles (umbral mínimo: %d).%n",
                 p.getNombre(), p.getId(), p.getCantidad(), umbral);
     }
 
-    // Muestra el historial de movimientos de un producto
+    public void mostrarResumenAlertasStock(List<ProductoModel> bajos, int umbral) {
+        if (bajos == null || bajos.isEmpty()) {
+            System.out.println("✔️ Todos los productos tienen stock suficiente.");
+            return;
+        }
+        System.out.println("========== ALERTAS DE STOCK BAJO ==========");
+        for (ProductoModel p : bajos) mostrarAlertaStock(p, umbral);
+        System.out.println("===========================================");
+    }
+
+    // ===================== MOVIMIENTOS =====================
+
     public void mostrarHistorialMovimientos(int idProducto, List<MovimientoInventarioModel> movimientos) {
         System.out.println("===== HISTORIAL DE MOVIMIENTOS — Producto ID: " + idProducto + " =====");
         if (movimientos == null || movimientos.isEmpty()) {
@@ -46,33 +91,34 @@ public class InventarioView {
             System.out.println("----------------------------------------------------");
             for (MovimientoInventarioModel m : movimientos) {
                 System.out.printf("%-5d %-20s %-10s %-8d%n",
-                        m.getId(),
-                        m.getFecha(),
-                        m.getTipo(),
-                        m.getCantidad());
+                        m.getId(), m.getFecha(), m.getTipo(), m.getCantidad());
             }
         }
         System.out.println("====================================================");
     }
 
-    // Registrar movimiento mediante interacción por consola
-    public void registrarMovimientoInteractivo(Scanner scanner) {
-        MovimientoDAO movimientoDAO = new MovimientoDAO();
+    // Recopila datos para registrar un movimiento — solo devuelve el modelo, NO llama al DAO
+    public MovimientoInventarioModel pedirDatosMovimiento(Scanner scanner) {
         MovimientoInventarioModel m = new MovimientoInventarioModel();
         try {
-            System.out.print("ID producto: "); m.setProductoId(Integer.parseInt(scanner.nextLine().trim()));
-            System.out.print("Tipo (ENTRADA/SALIDA/AJUSTE): "); m.setTipo(scanner.nextLine().trim());
-            System.out.print("Cantidad: "); m.setCantidad(Integer.parseInt(scanner.nextLine().trim()));
+            System.out.print("ID producto               : "); m.setProductoId(Integer.parseInt(scanner.nextLine().trim()));
+            System.out.print("Tipo (ENTRADA/SALIDA/AJUSTE): "); m.setTipo(scanner.nextLine().trim().toUpperCase());
+            System.out.print("Cantidad                  : "); m.setCantidad(Integer.parseInt(scanner.nextLine().trim()));
             m.setFecha(java.time.LocalDateTime.now().toString());
-            movimientoDAO.registrar(m);
-            System.out.println("Movimiento registrado.");
         } catch (NumberFormatException e) {
-            System.out.println("Entrada numérica inválida.");
+            System.out.println("Entrada numérica inválida. Operación cancelada.");
+            return null;
         }
+        return m;
     }
 
-    // Mensaje genérico
+    // ===================== GENERAL =====================
+
     public void mostrarMensaje(String mensaje) {
         System.out.println("[INFO] " + mensaje);
+    }
+
+    public void mostrarError(String mensaje) {
+        System.out.println("[ERROR] " + mensaje);
     }
 }
