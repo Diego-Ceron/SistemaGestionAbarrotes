@@ -37,5 +37,11 @@ public class App {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+        // Lanzar la vista de consola principal
+        try {
+            com.tienda.ui.MainView.main(args);
+        } catch (Exception e) {
+            System.out.println("Error al iniciar MainView: " + e.getMessage());
+        }
     }
 }
