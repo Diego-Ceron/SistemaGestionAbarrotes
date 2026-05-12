@@ -32,6 +32,10 @@ public class BuscarProductoService {
 
     private List<ProductoModel> buscar(String sql, String param) {
         List<ProductoModel> lista = new ArrayList<>();
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Búsqueda de productos vacía.");
+            return lista;
+        }
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, param);
             try (ResultSet rs = ps.executeQuery()) {

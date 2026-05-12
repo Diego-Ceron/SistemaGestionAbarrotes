@@ -20,6 +20,10 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public void registrar(ClienteModel c) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede registrar cliente.");
+            return;
+        }
         String sql = "INSERT INTO cliente (nombre, direccion, telefono, email) VALUES (?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, c.getNombre());
@@ -37,6 +41,10 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public ClienteModel buscar(int id) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Búsqueda de cliente vacía.");
+            return null;
+        }
         String sql = "SELECT id, nombre, direccion, telefono, email FROM cliente WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -59,6 +67,10 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public void actualizar(ClienteModel c) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede actualizar cliente.");
+            return;
+        }
         String sql = "UPDATE cliente SET nombre = ?, direccion = ?, telefono = ?, email = ? WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, c.getNombre());
@@ -84,6 +96,10 @@ public class ClienteDAO implements IClienteDAO {
             LIMIT 10
             """;
         List<ClienteModel> lista = new ArrayList<>();
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Lista de clientes vacía.");
+            return lista;
+        }
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -103,6 +119,10 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public ClienteModel buscarPorTelefono(String telefono) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Búsqueda de cliente vacía.");
+            return null;
+        }
         String sql = "SELECT id, nombre, direccion, telefono, email FROM cliente WHERE telefono = ? LIMIT 1";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, telefono);

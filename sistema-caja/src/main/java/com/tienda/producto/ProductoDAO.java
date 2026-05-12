@@ -20,6 +20,10 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
     public void agregar(ProductoModel p) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede agregar producto.");
+            return;
+        }
         String sql = "INSERT INTO producto (nombre, precio, cantidad, vencimiento, descripcion, categoria, proveedor, codigo) VALUES (?,?,?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, p.getNombre());
@@ -43,6 +47,10 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
     public void actualizar(ProductoModel p) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede actualizar producto.");
+            return;
+        }
         String sql = "UPDATE producto SET nombre=?, precio=?, cantidad=?, vencimiento=?, descripcion=?, categoria=?, proveedor=?, codigo=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, p.getNombre());
@@ -62,6 +70,10 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
     public void eliminar(int id) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede eliminar producto.");
+            return;
+        }
         String sql = "DELETE FROM producto WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -74,6 +86,10 @@ public class ProductoDAO implements IProductoDAO {
     @Override
     public List<ProductoModel> listarTodos() {
         List<ProductoModel> lista = new ArrayList<>();
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Lista de productos vacía.");
+            return lista;
+        }
         String sql = "SELECT id, nombre, precio, cantidad, vencimiento, descripcion, categoria, proveedor, codigo FROM producto";
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

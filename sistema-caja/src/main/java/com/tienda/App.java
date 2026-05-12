@@ -42,6 +42,7 @@ public class App {
             com.tienda.ui.MainView.main(args);
         } catch (Exception e) {
             System.out.println("Error al iniciar MainView: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

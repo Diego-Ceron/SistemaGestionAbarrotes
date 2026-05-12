@@ -13,6 +13,8 @@ import com.tienda.producto.ProductoModel;
 import com.tienda.promocion.PromocionDAO;
 import com.tienda.promocion.PromocionModel;
 import com.tienda.promocion.PromocionView;
+import com.tienda.reporte.ReporteController;
+import com.tienda.reporte.ReporteView;
 import com.tienda.venta.VentaController;
 import com.tienda.venta.VentaDAO;
 import com.tienda.venta.VentaModel;
@@ -30,6 +32,8 @@ public class MainView {
     private final VentaController ventaController = new VentaController(ventaDAO);
     private final PromocionDAO promocionDAO = new PromocionDAO();
     private final PromocionView promocionView = new PromocionView();
+    private final ReporteController reporteController = new ReporteController();
+    private final ReporteView reporteView = new ReporteView();
 
     public void mostrarMenu() {
         boolean running = true;
@@ -39,6 +43,7 @@ public class MainView {
             System.out.println("2) Inventario");
             System.out.println("3) Ventas");
             System.out.println("4) Promociones");
+            System.out.println("5) Reportes");
             System.out.println("0) Salir");
             System.out.print("Elija una opción: ");
             String opt = scanner.nextLine().trim();
@@ -47,6 +52,7 @@ public class MainView {
                 case "2" -> menuInventario();
                 case "3" -> menuVentas();
                 case "4" -> menuPromociones();
+                case "5" -> menuReportes();
                 case "0" -> {
                     running = false;
                     System.out.println("Saliendo...");
@@ -54,6 +60,10 @@ public class MainView {
                 default -> System.out.println("Opción inválida");
             }
         }
+    }
+
+    private void menuReportes() {
+        reporteView.mostrarMenu(scanner, reporteController);
     }
 
     private void menuClientes() {

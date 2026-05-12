@@ -19,6 +19,10 @@ public class MovimientoDAO implements IMovimientoDAO {
 
     @Override
     public void registrar(MovimientoInventarioModel m) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede registrar movimiento.");
+            return;
+        }
         String sql = "INSERT INTO movimiento (fecha, tipo, cantidad, producto_id) VALUES (?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, m.getFecha());
@@ -64,6 +68,10 @@ public class MovimientoDAO implements IMovimientoDAO {
     public List<MovimientoInventarioModel> listarPorProducto(int idProducto) {
         String sql = "SELECT id, fecha, tipo, cantidad, producto_id FROM movimiento WHERE producto_id = ? ORDER BY fecha DESC";
         List<MovimientoInventarioModel> lista = new ArrayList<>();
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Lista de movimientos vacía.");
+            return lista;
+        }
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idProducto);
             try (ResultSet rs = ps.executeQuery()) {

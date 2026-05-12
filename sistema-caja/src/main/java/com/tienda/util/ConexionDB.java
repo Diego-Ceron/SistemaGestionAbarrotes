@@ -17,6 +17,12 @@ public class ConexionDB {
     // Constructor privado
     private ConexionDB() {
         try {
+            try {
+                Class.forName("org.sqlite.JDBC");
+            } catch (ClassNotFoundException e) {
+                // driver not found on classpath
+                System.out.println("SQLite JDBC driver no encontrado: " + e.getMessage());
+            }
             conexion = DriverManager.getConnection(URL);
             System.out.println("Conexión establecida");
         } catch (SQLException e) {
@@ -34,6 +40,18 @@ public class ConexionDB {
 
     // Método para obtener la conexión
     public Connection getConexion() {
+        try {
+            if (conexion == null || conexion.isClosed()) {
+                try {
+                    conexion = DriverManager.getConnection(URL);
+                    System.out.println("Conexión reestablecida");
+                } catch (SQLException e) {
+                    System.out.println("Error al reconectar: " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error comprobando estado de la conexión: " + e.getMessage());
+        }
         return conexion;
     }
 
