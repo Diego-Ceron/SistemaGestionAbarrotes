@@ -1,11 +1,8 @@
 package com.tienda.cliente;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import com.tienda.util.ConexionDB;
 
 public class ClienteDAO implements IClienteDAO {
@@ -26,9 +23,7 @@ public class ClienteDAO implements IClienteDAO {
             ps.setString(4, c.getEmail());
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) {
-                    c.setId(keys.getInt(1));
-                }
+                if (keys.next()) c.setId(keys.getInt(1));
             }
         } catch (SQLException e) {
             System.out.println("Error al registrar cliente: " + e.getMessage());
@@ -37,7 +32,7 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public ClienteModel buscar(int id) {
-        String sql = "SELECT id, nombre, direccion, telefono, email, fecha_registro FROM cliente WHERE id = ?";
+        String sql = "SELECT id, nombre, direccion, telefono, email FROM cliente WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -73,18 +68,31 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public void listarFrecuentes() {
-        // Por ahora listamos los últimos 10 clientes registrados
-        String sql = "SELECT id, nombre, direccion, telefono, email FROM cliente ORDER BY fecha_registro DESC LIMIT 10";
-        System.out.println("Listado de clientes (recientes):");
+    public List<ClienteModel> listarFrecuentes() {
+        // Clientes frecuentes = los que más compras tienen
+        String sql = """
+            SELECT c.id, c.nombre, c.direccion, c.telefono, c.email
+            FROM cliente c
+            JOIN venta v ON c.id = v.id_cliente
+            GROUP BY c.id
+            ORDER BY COUNT(v.id) DESC
+            LIMIT 10
+            """;
+        List<ClienteModel> lista = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                System.out.printf("- %d: %s (%s) %n", rs.getInt("id"), rs.getString("nombre"), rs.getString("email"));
+                ClienteModel c = new ClienteModel();
+                c.setId(rs.getInt("id"));
+                c.setNombre(rs.getString("nombre"));
+                c.setDireccion(rs.getString("direccion"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setEmail(rs.getString("email"));
+                lista.add(c);
             }
         } catch (SQLException e) {
-            System.out.println("Error al listar clientes: " + e.getMessage());
+            System.out.println("Error al listar clientes frecuentes: " + e.getMessage());
         }
+        return lista;
     }
-
 }

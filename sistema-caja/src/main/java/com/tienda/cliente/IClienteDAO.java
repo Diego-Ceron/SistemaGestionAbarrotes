@@ -1,8 +1,10 @@
 package com.tienda.cliente;
 
+import java.util.List;
+
 public interface IClienteDAO {
     void registrar(ClienteModel c);
     ClienteModel buscar(int id);
     void actualizar(ClienteModel c);
-    void listarFrecuentes();
+    List<ClienteModel> listarFrecuentes();
 }

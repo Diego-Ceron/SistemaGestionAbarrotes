@@ -1,6 +1,8 @@
 package com.tienda.inventario;
 
+import java.util.List;
+
 public interface IMovimientoDAO {
     void registrar(MovimientoInventarioModel m);
-    void listarPorProducto(int idProducto);
+    List<MovimientoInventarioModel> listarPorProducto(int idProducto);
 }
