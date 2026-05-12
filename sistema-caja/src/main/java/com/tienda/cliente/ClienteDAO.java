@@ -1,8 +1,13 @@
 package com.tienda.cliente;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.tienda.util.ConexionDB;
 
 public class ClienteDAO implements IClienteDAO {
@@ -94,5 +99,27 @@ public class ClienteDAO implements IClienteDAO {
             System.out.println("Error al listar clientes frecuentes: " + e.getMessage());
         }
         return lista;
+    }
+
+    @Override
+    public ClienteModel buscarPorTelefono(String telefono) {
+        String sql = "SELECT id, nombre, direccion, telefono, email FROM cliente WHERE telefono = ? LIMIT 1";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, telefono);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    ClienteModel c = new ClienteModel();
+                    c.setId(rs.getInt("id"));
+                    c.setNombre(rs.getString("nombre"));
+                    c.setDireccion(rs.getString("direccion"));
+                    c.setTelefono(rs.getString("telefono"));
+                    c.setEmail(rs.getString("email"));
+                    return c;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar cliente por teléfono: " + e.getMessage());
+        }
+        return null;
     }
 }

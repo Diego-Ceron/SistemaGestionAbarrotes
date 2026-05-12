@@ -10,6 +10,13 @@ import com.tienda.inventario.MovimientoDAO;
 import com.tienda.inventario.MovimientoInventarioModel;
 import com.tienda.producto.ProductoDAO;
 import com.tienda.producto.ProductoModel;
+import com.tienda.promocion.PromocionDAO;
+import com.tienda.promocion.PromocionModel;
+import com.tienda.promocion.PromocionView;
+import com.tienda.venta.VentaController;
+import com.tienda.venta.VentaDAO;
+import com.tienda.venta.VentaModel;
+import com.tienda.venta.VentaView;
 
 public class MainView {
 
@@ -18,6 +25,11 @@ public class MainView {
     private final ClienteView clienteView = new ClienteView();
     private final InventarioView inventarioView = new InventarioView();
     private final ProductoDAO productoDAO = new ProductoDAO();
+    private final VentaView ventaView = new VentaView();
+    private final VentaDAO ventaDAO = new VentaDAO();
+    private final VentaController ventaController = new VentaController(ventaDAO);
+    private final PromocionDAO promocionDAO = new PromocionDAO();
+    private final PromocionView promocionView = new PromocionView();
 
     public void mostrarMenu() {
         boolean running = true;
@@ -25,12 +37,16 @@ public class MainView {
             System.out.println("\n=== SISTEMA DE CAJA - MENU PRINCIPAL ===");
             System.out.println("1) Clientes");
             System.out.println("2) Inventario");
+            System.out.println("3) Ventas");
+            System.out.println("4) Promociones");
             System.out.println("0) Salir");
             System.out.print("Elija una opción: ");
             String opt = scanner.nextLine().trim();
             switch (opt) {
                 case "1" -> menuClientes();
                 case "2" -> menuInventario();
+                case "3" -> menuVentas();
+                case "4" -> menuPromociones();
                 case "0" -> {
                     running = false;
                     System.out.println("Saliendo...");
@@ -148,6 +164,70 @@ public class MainView {
                 if (m != null) {
                     new MovimientoDAO().registrar(m);
                     System.out.println("Movimiento registrado.");
+                }
+            }
+            default -> System.out.println("Volviendo al menú principal...");
+        }
+    }
+
+    private void menuVentas() {
+        System.out.println("\n--- Ventas ---");
+        System.out.println("1) Registrar venta");
+        System.out.println("2) Listar ventas");
+        System.out.println("0) Volver");
+        System.out.print("Opción: ");
+        String opt = scanner.nextLine().trim();
+        switch (opt) {
+            case "1" -> {
+                VentaModel v = ventaView.pedirDatosVenta(scanner);
+                if (v != null) {
+                    ventaController.registrarVenta(v);
+                    ventaView.mostrarVenta(v);
+                    System.out.println("Venta registrada con ID: " + v.getId());
+                }
+            }
+            case "2" -> ventaView.mostrarHistorial(ventaDAO.listarTodos());
+            default -> System.out.println("Volviendo al menú principal...");
+        }
+    }
+
+    private void menuPromociones() {
+        System.out.println("\n--- Promociones ---");
+        System.out.println("1) Listar promociones");
+        System.out.println("2) Agregar promocion");
+        System.out.println("3) Editar promocion");
+        System.out.println("4) Eliminar promocion");
+        System.out.println("0) Volver");
+        System.out.print("Opción: ");
+        String opt = scanner.nextLine().trim();
+        switch (opt) {
+            case "1" -> promocionView.mostrarPromociones(promocionDAO.listarTodos());
+            case "2" -> {
+                PromocionModel p = promocionView.pedirDatosPromocion(scanner);
+                if (p != null) {
+                    promocionDAO.agregar(p);
+                    System.out.println("Promoción agregada con ID: " + p.getId());
+                }
+            }
+            case "3" -> {
+                int id = promocionView.pedirIdPromocion(scanner);
+                if (id > 0) {
+                    PromocionModel existing = promocionDAO.buscarPorProducto(id);
+                    // buscarPorProducto no es ideal para buscar por id; simplificamos
+                    System.out.println("Ingresa nuevos datos para la promoción:");
+                    PromocionModel nuevo = promocionView.pedirDatosPromocion(scanner);
+                    if (nuevo != null) {
+                        nuevo.setId(id);
+                        promocionDAO.actualizar(nuevo);
+                        System.out.println("Promoción actualizada.");
+                    }
+                }
+            }
+            case "4" -> {
+                int idDel = promocionView.pedirIdPromocion(scanner);
+                if (idDel > 0) {
+                    promocionDAO.eliminar(idDel);
+                    System.out.println("Promoción eliminada (si existía).");
                 }
             }
             default -> System.out.println("Volviendo al menú principal...");

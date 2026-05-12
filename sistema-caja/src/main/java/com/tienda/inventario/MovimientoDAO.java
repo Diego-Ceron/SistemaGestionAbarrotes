@@ -1,8 +1,12 @@
 package com.tienda.inventario;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.tienda.util.ConexionDB;
 
 public class MovimientoDAO implements IMovimientoDAO {
@@ -22,6 +26,35 @@ public class MovimientoDAO implements IMovimientoDAO {
             ps.setInt(3, m.getCantidad());
             ps.setInt(4, m.getProductoId());
             ps.executeUpdate();
+            // Ajustar stock del producto según el tipo de movimiento
+            int delta;
+            if ("SALIDA".equalsIgnoreCase(m.getTipo())) {
+                delta = -Math.abs(m.getCantidad());
+            } else if ("ENTRADA".equalsIgnoreCase(m.getTipo())) {
+                delta = Math.abs(m.getCantidad());
+            } else {
+                // AJUSTE u otros: usar la cantidad tal cual (permite negativo)
+                delta = m.getCantidad();
+            }
+
+            // Obtener stock actual
+            String sel = "SELECT cantidad FROM producto WHERE id = ?";
+            try (PreparedStatement ps2 = conn.prepareStatement(sel)) {
+                ps2.setInt(1, m.getProductoId());
+                try (ResultSet rs = ps2.executeQuery()) {
+                    if (rs.next()) {
+                        int actual = rs.getInt("cantidad");
+                        int nuevo = actual + delta;
+                        if (nuevo < 0) nuevo = 0;
+                        String upd = "UPDATE producto SET cantidad = ? WHERE id = ?";
+                        try (PreparedStatement ps3 = conn.prepareStatement(upd)) {
+                            ps3.setInt(1, nuevo);
+                            ps3.setInt(2, m.getProductoId());
+                            ps3.executeUpdate();
+                        }
+                    }
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Error al registrar movimiento: " + e.getMessage());
         }

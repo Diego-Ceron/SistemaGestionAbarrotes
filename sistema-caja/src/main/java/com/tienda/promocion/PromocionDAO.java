@@ -79,4 +79,23 @@ public class PromocionDAO implements IPromocionDAO {
         }
         return null;
     }
+
+    @Override
+    public java.util.List<PromocionModel> listarTodos() {
+        String sql = "SELECT id, descripcion, porcentajeDescuento FROM promocion WHERE activo = 1";
+        java.util.List<PromocionModel> lista = new java.util.ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                PromocionModel p = new PromocionModel();
+                p.setId(rs.getInt("id"));
+                p.setDescripcion(rs.getString("descripcion"));
+                p.setPorcentajeDescuento(rs.getDouble("porcentajeDescuento"));
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar promociones: " + e.getMessage());
+        }
+        return lista;
+    }
 }

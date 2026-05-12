@@ -5,4 +5,5 @@ public interface IPromocionDAO {
     void actualizar(PromocionModel p);
     void eliminar(int id);
     PromocionModel buscarPorProducto(int idProducto);
+    java.util.List<PromocionModel> listarTodos();
 }
