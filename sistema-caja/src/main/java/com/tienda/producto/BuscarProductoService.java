@@ -30,6 +30,36 @@ public class BuscarProductoService {
         return buscar(sql, "%" + categoria + "%");
     }
 
+    public List<ProductoModel> buscarPorId(int id) {
+        String sql = "SELECT id, nombre, precio, cantidad, vencimiento, descripcion, categoria, proveedor, codigo FROM producto WHERE id = ?";
+        List<ProductoModel> lista = new ArrayList<>();
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. Búsqueda de productos vacía.");
+            return lista;
+        }
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ProductoModel p = new ProductoModel();
+                    p.setId(rs.getInt("id"));
+                    p.setNombre(rs.getString("nombre"));
+                    p.setPrecio(rs.getDouble("precio"));
+                    p.setCantidad(rs.getInt("cantidad"));
+                    p.setVencimiento(rs.getString("vencimiento"));
+                    p.setDescripcion(rs.getString("descripcion"));
+                    p.setCategoria(rs.getString("categoria"));
+                    p.setProveedor(rs.getString("proveedor"));
+                    p.setCodigo(rs.getString("codigo"));
+                    lista.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en búsqueda de producto por id: " + e.getMessage());
+        }
+        return lista;
+    }
+
     private List<ProductoModel> buscar(String sql, String param) {
         List<ProductoModel> lista = new ArrayList<>();
         if (conn == null) {

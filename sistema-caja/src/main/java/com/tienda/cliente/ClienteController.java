@@ -25,4 +25,16 @@ public class ClienteController {
     public List<ClienteModel> listarClientesFrecuentes() {
         return clienteDAO.listarFrecuentes();
     }
+
+    public List<ClienteModel> listarTodos() {
+        return clienteDAO.listarTodos();
+    }
+
+    public void eliminarCliente(int id) {
+        clienteDAO.eliminar(id);
+    }
+
+    public ClienteModel buscarPorTelefono(String telefono) {
+        return clienteDAO.buscarPorTelefono(telefono);
+    }
 }

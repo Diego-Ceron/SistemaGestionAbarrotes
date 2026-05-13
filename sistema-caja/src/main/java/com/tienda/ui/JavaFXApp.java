@@ -1,5 +1,8 @@
 package com.tienda.ui;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.tienda.cliente.ClienteDAO;
 import com.tienda.cliente.ClienteModel;
 import com.tienda.producto.ProductoDAO;
@@ -16,27 +19,26 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.List;
-import java.util.Optional;
 
 public class JavaFXApp extends Application {
 
@@ -94,7 +96,63 @@ public class JavaFXApp extends Application {
         Button refresh = new Button("Refrescar");
         refresh.setOnAction(event -> table.getItems().setAll(clienteDAO.listarTodos()));
 
-        VBox main = new VBox(10, refresh, table);
+        Button add = new Button("Agregar cliente");
+        add.setOnAction(e -> {
+            TextInputDialog d = new TextInputDialog();
+            d.setHeaderText("Ingrese nombre:");
+            d.showAndWait().ifPresent(nombre -> {
+                TextInputDialog d2 = new TextInputDialog(); d2.setHeaderText("Ingrese email:");
+                d2.showAndWait().ifPresent(email -> {
+                    TextInputDialog d3 = new TextInputDialog(); d3.setHeaderText("Ingrese teléfono:");
+                    d3.showAndWait().ifPresent(tel -> {
+                        TextInputDialog d4 = new TextInputDialog(); d4.setHeaderText("Ingrese dirección:");
+                        d4.showAndWait().ifPresent(dir -> {
+                            com.tienda.cliente.ClienteModel c = new com.tienda.cliente.ClienteModel();
+                            c.setNombre(nombre); c.setEmail(email); c.setTelefono(tel); c.setDireccion(dir);
+                            clienteDAO.registrar(c);
+                            refresh.fire();
+                        });
+                    });
+                });
+            });
+        });
+
+        Button edit = new Button("Editar cliente");
+        edit.setOnAction(e -> {
+            TextInputDialog idDialog = new TextInputDialog(); idDialog.setHeaderText("ID cliente a editar:");
+            idDialog.showAndWait().ifPresent(idStr -> {
+                try {
+                    int id = Integer.parseInt(idStr.trim());
+                    com.tienda.cliente.ClienteModel c = clienteDAO.buscar(id);
+                    if (c == null) { new Alert(AlertType.INFORMATION, "Cliente no encontrado").show(); return; }
+                    TextInputDialog dn = new TextInputDialog(c.getNombre()); dn.setHeaderText("Nombre:");
+                    dn.showAndWait().ifPresent(nombre -> { c.setNombre(nombre);
+                        TextInputDialog de = new TextInputDialog(c.getEmail()); de.setHeaderText("Email:");
+                        de.showAndWait().ifPresent(email -> { c.setEmail(email);
+                            TextInputDialog dt = new TextInputDialog(c.getTelefono()); dt.setHeaderText("Teléfono:");
+                            dt.showAndWait().ifPresent(tel -> { c.setTelefono(tel);
+                                TextInputDialog dd = new TextInputDialog(c.getDireccion()); dd.setHeaderText("Dirección:");
+                                dd.showAndWait().ifPresent(dir -> { c.setDireccion(dir); clienteDAO.actualizar(c); refresh.fire(); });
+                            });
+                        });
+                    });
+                } catch (NumberFormatException ex) { new Alert(AlertType.ERROR, "ID inválido").show(); }
+            });
+        });
+
+        Button del = new Button("Eliminar cliente");
+        del.setOnAction(e -> {
+            TextInputDialog idDialog = new TextInputDialog(); idDialog.setHeaderText("ID cliente a eliminar:");
+            idDialog.showAndWait().ifPresent(idStr -> {
+                try { int id = Integer.parseInt(idStr.trim()); clienteDAO.eliminar(id); refresh.fire(); }
+                catch (NumberFormatException ex) { new Alert(AlertType.ERROR, "ID inválido").show(); }
+            });
+        });
+
+        HBox btns = new HBox(8, refresh, add, edit, del);
+        btns.setAlignment(Pos.CENTER_LEFT);
+
+        VBox main = new VBox(10, btns, table);
         main.setPadding(new Insets(18));
         main.getStyleClass().add("card");
         main.setFillWidth(true);
@@ -113,13 +171,128 @@ public class JavaFXApp extends Application {
                 createColumn("Precio", "precio", 100),
                 createColumn("Cantidad", "cantidad", 90),
                 createColumn("Código", "codigo", 120),
+                createColumn("Proveedor", "proveedor", 160),
                 createColumn("Categoría", "categoria", 150)
         );
 
         Button refresh = new Button("Refrescar inventario");
         refresh.setOnAction(event -> table.getItems().setAll(productoDAO.listarTodos()));
 
-        VBox main = new VBox(10, refresh, table);
+        Button add = new Button("Agregar producto");
+        add.setOnAction(e -> {
+            TextInputDialog dn = new TextInputDialog(); dn.setHeaderText("Nombre:");
+            dn.showAndWait().ifPresent(nombre -> {
+                try {
+                    TextInputDialog dp = new TextInputDialog(); dp.setHeaderText("Precio:");
+                    dp.showAndWait().ifPresent(pre -> {
+                        TextInputDialog dc = new TextInputDialog(); dc.setHeaderText("Cantidad:");
+                        dc.showAndWait().ifPresent(cant -> {
+                            com.tienda.producto.ProductoModel p = new com.tienda.producto.ProductoModel();
+                            p.setNombre(nombre);
+                            try { p.setPrecio(Double.parseDouble(pre.trim())); } catch (Exception ex) {}
+                            try { p.setCantidad(Integer.parseInt(cant.trim())); } catch (Exception ex) {}
+                            TextInputDialog dCodigo = new TextInputDialog(); dCodigo.setHeaderText("Código (opcional):");
+                            dCodigo.showAndWait().ifPresent(code -> p.setCodigo(code.trim()));
+                            TextInputDialog dProv = new TextInputDialog(); dProv.setHeaderText("Proveedor (opcional):");
+                            dProv.showAndWait().ifPresent(prov -> p.setProveedor(prov.trim()));
+                            TextInputDialog dCat = new TextInputDialog(); dCat.setHeaderText("Categoría (opcional):");
+                            dCat.showAndWait().ifPresent(cat -> p.setCategoria(cat.trim()));
+                            productoDAO.agregar(p); refresh.fire();
+                        });
+                    });
+                } catch (Exception ex) { new Alert(AlertType.ERROR, "Entrada inválida").show(); }
+            });
+        });
+
+        Button edit = new Button("Editar producto");
+        edit.setOnAction(e -> {
+            TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID producto a editar:");
+            idD.showAndWait().ifPresent(idStr -> {
+                try {
+                    int id = Integer.parseInt(idStr.trim());
+                    com.tienda.producto.ProductoModel p = productoDAO.listarTodos().stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+                    if (p == null) { new Alert(AlertType.INFORMATION, "Producto no encontrado").show(); return; }
+                    TextInputDialog nn = new TextInputDialog(p.getNombre()); nn.setHeaderText("Nombre:");
+                    nn.showAndWait().ifPresent(nombre -> { p.setNombre(nombre);
+                        TextInputDialog pp = new TextInputDialog(String.valueOf(p.getPrecio())); pp.setHeaderText("Precio:");
+                        pp.showAndWait().ifPresent(pre -> { try { p.setPrecio(Double.parseDouble(pre.trim())); } catch (Exception ex) {};
+                            TextInputDialog pc = new TextInputDialog(p.getCodigo() == null ? "" : p.getCodigo()); pc.setHeaderText("Código (opcional):");
+                            pc.showAndWait().ifPresent(code -> p.setCodigo(code.trim()));
+                            TextInputDialog prov = new TextInputDialog(p.getProveedor() == null ? "" : p.getProveedor()); prov.setHeaderText("Proveedor (opcional):");
+                            prov.showAndWait().ifPresent(pr -> p.setProveedor(pr.trim()));
+                            TextInputDialog cat = new TextInputDialog(p.getCategoria() == null ? "" : p.getCategoria()); cat.setHeaderText("Categoría (opcional):");
+                            cat.showAndWait().ifPresent(ca -> p.setCategoria(ca.trim()));
+                            productoDAO.actualizar(p); refresh.fire(); });
+                    });
+                } catch (NumberFormatException ex) { new Alert(AlertType.ERROR, "ID inválido").show(); }
+            });
+        });
+
+        Button del = new Button("Eliminar producto");
+        del.setOnAction(e -> {
+            TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID producto a eliminar:");
+            idD.showAndWait().ifPresent(idStr -> { try { productoDAO.eliminar(Integer.parseInt(idStr.trim())); refresh.fire(); } catch (Exception ex) { new Alert(AlertType.ERROR, "ID inválido").show(); } });
+        });
+
+        Button mov = new Button("Registrar movimiento");
+        mov.setOnAction(e -> {
+            TextInputDialog pid = new TextInputDialog(); pid.setHeaderText("ID producto:");
+            pid.showAndWait().ifPresent(pidStr -> {
+                TextInputDialog tt = new TextInputDialog(); tt.setHeaderText("Tipo (ENTRADA/SALIDA):");
+                tt.showAndWait().ifPresent(tipo -> {
+                    // Normalizar tipo: eliminar AJUSTE (tratar como ENTRADA)
+                    String tipoNorm = tipo.trim().equalsIgnoreCase("AJUSTE") ? "ENTRADA" : tipo.trim().toUpperCase();
+                    if (!tipoNorm.equalsIgnoreCase("ENTRADA") && !tipoNorm.equalsIgnoreCase("SALIDA")) {
+                        new Alert(AlertType.ERROR, "Tipo inválido. Use ENTRADA o SALIDA.").show();
+                        return;
+                    }
+                    TextInputDialog cq = new TextInputDialog(); cq.setHeaderText("Cantidad:");
+                    cq.showAndWait().ifPresent(cqStr -> {
+                        try {
+                            com.tienda.inventario.MovimientoInventarioModel m = new com.tienda.inventario.MovimientoInventarioModel();
+                            m.setProductoId(Integer.parseInt(pidStr.trim()));
+                            m.setTipo(tipoNorm);
+                            m.setCantidad(Integer.parseInt(cqStr.trim()));
+                            m.setFecha(java.time.LocalDateTime.now().toString());
+                            new com.tienda.inventario.MovimientoDAO().registrar(m);
+                            new Alert(AlertType.INFORMATION, "Movimiento registrado").show();
+                        } catch (Exception ex) { new Alert(AlertType.ERROR, "Entrada inválida").show(); }
+                    });
+                });
+            });
+        });
+
+        HBox btns = new HBox(8, refresh, add, edit, del, mov);
+        btns.setAlignment(Pos.CENTER_LEFT);
+
+        // Añadir botón de búsqueda que usa BuscarProductoService
+        Button search = new Button("Buscar producto");
+        search.setOnAction(ev -> {
+            TextInputDialog tipoD = new TextInputDialog(); tipoD.setHeaderText("Buscar por: id/codigo/categoria");
+            tipoD.showAndWait().ifPresent(tipo -> {
+                String t = tipo.trim().toLowerCase();
+                com.tienda.producto.BuscarProductoService buscador = productoDAO.getBuscador();
+                if (t.equals("id")) {
+                    TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID:");
+                    idD.showAndWait().ifPresent(idStr -> {
+                        try {
+                            int id = Integer.parseInt(idStr.trim());
+                            table.getItems().setAll(buscador.buscarPorId(id));
+                        } catch (NumberFormatException ex) { new Alert(AlertType.ERROR, "ID inválido").show(); }
+                    });
+                } else if (t.equals("codigo")) {
+                    TextInputDialog cD = new TextInputDialog(); cD.setHeaderText("Código:");
+                    cD.showAndWait().ifPresent(code -> table.getItems().setAll(buscador.buscarPorCodigo(code.trim())));
+                } else if (t.equals("categoria")) {
+                    TextInputDialog cD = new TextInputDialog(); cD.setHeaderText("Categoría (parcial):");
+                    cD.showAndWait().ifPresent(cat -> table.getItems().setAll(buscador.buscarPorCategoria(cat.trim())));
+                } else {
+                    new Alert(AlertType.INFORMATION, "Opción inválida. Use id, codigo o categoria.").show();
+                }
+            });
+        });
+
+        VBox main = new VBox(10, btns, search, table);
         main.setPadding(new Insets(18));
         main.getStyleClass().add("card");
         main.setFillWidth(true);
@@ -210,6 +383,26 @@ public class JavaFXApp extends Application {
             }
         });
 
+        Button removeByIdButton = new Button("Eliminar artículo por ID");
+        removeByIdButton.setOnAction(ev -> {
+            TextInputDialog idD = new TextInputDialog();
+            idD.setHeaderText("ID producto a eliminar (del carrito):");
+            idD.showAndWait().ifPresent(idStr -> {
+                try {
+                    int id = Integer.parseInt(idStr.trim());
+                    boolean removed = cartItems.removeIf(p -> p.getId() == id);
+                    if (!removed) {
+                        ticketArea.setText("No se encontró artículo con ID " + id + " en el carrito.");
+                    } else {
+                        updateTotalLabel(cartItems, totalLabel);
+                        ticketArea.setText("Artículo(s) con ID " + id + " eliminados del carrito.");
+                    }
+                } catch (NumberFormatException ex) {
+                    new Alert(AlertType.ERROR, "ID inválido").show();
+                }
+            });
+        });
+
         Button sellButton = new Button("Registrar venta");
         sellButton.setOnAction(event -> {
             if (cartItems.isEmpty()) {
@@ -298,6 +491,7 @@ public class JavaFXApp extends Application {
         form.add(new Label("Teléfono:"), 0, 2);
         form.add(phoneField, 1, 2, 2, 1);
         form.add(sellButton, 4, 1);
+        form.add(removeByIdButton, 4, 2);
 
         VBox leftPane = new VBox(14, form, totalLabel, cartTable);
         leftPane.setPadding(new Insets(12));
@@ -359,7 +553,29 @@ public class JavaFXApp extends Application {
         Button refresh = new Button("Refrescar promociones");
         refresh.setOnAction(event -> table.getItems().setAll(promocionDAO.listarTodos()));
 
-        VBox main = new VBox(10, refresh, table);
+        Button add = new Button("Agregar promocion");
+        add.setOnAction(e -> {
+            TextInputDialog d = new TextInputDialog(); d.setHeaderText("Descripción:");
+            d.showAndWait().ifPresent(desc -> {
+                TextInputDialog p = new TextInputDialog(); p.setHeaderText("Porcentaje (ej. 10):");
+                p.showAndWait().ifPresent(por -> { try { com.tienda.promocion.PromocionModel pm = new com.tienda.promocion.PromocionModel(); pm.setDescripcion(desc); pm.setPorcentajeDescuento(Double.parseDouble(por.trim())); promocionDAO.agregar(pm); refresh.fire(); } catch (Exception ex) { new Alert(AlertType.ERROR, "Porcentaje inválido").show(); } });
+            });
+        });
+
+        Button edit = new Button("Editar promocion");
+        edit.setOnAction(e -> {
+            TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID promocion a editar:");
+            idD.showAndWait().ifPresent(idStr -> {
+                try { int id = Integer.parseInt(idStr.trim()); TextInputDialog d = new TextInputDialog(); d.setHeaderText("Nueva descripción:"); d.showAndWait().ifPresent(desc -> { TextInputDialog p = new TextInputDialog(); p.setHeaderText("Nuevo porcentaje:"); p.showAndWait().ifPresent(por -> { try { com.tienda.promocion.PromocionModel pm = new com.tienda.promocion.PromocionModel(); pm.setId(id); pm.setDescripcion(desc); pm.setPorcentajeDescuento(Double.parseDouble(por.trim())); promocionDAO.actualizar(pm); refresh.fire(); } catch (Exception ex) { new Alert(AlertType.ERROR, "Porcentaje inválido").show(); } }); }); } catch (NumberFormatException ex) { new Alert(AlertType.ERROR, "ID inválido").show(); } });
+        });
+
+        Button del = new Button("Eliminar promocion");
+        del.setOnAction(e -> { TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID promocion a eliminar:"); idD.showAndWait().ifPresent(idStr -> { try { promocionDAO.eliminar(Integer.parseInt(idStr.trim())); refresh.fire(); } catch (Exception ex) { new Alert(AlertType.ERROR, "ID inválido").show(); } }); });
+
+        HBox btns = new HBox(8, refresh, add, edit, del);
+        btns.setAlignment(Pos.CENTER_LEFT);
+
+        VBox main = new VBox(10, btns, table);
         main.setPadding(new Insets(18));
         main.getStyleClass().add("card");
         main.setFillWidth(true);
@@ -373,9 +589,9 @@ public class JavaFXApp extends Application {
         TableView<com.tienda.reporte.ReporteModel> table = new TableView<>();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.getColumns().addAll(
-                createColumn("Período", "periodo", 200),
-                createColumn("Cantidad Ventas", "cantidad", 150),
-                createColumn("Total", "total", 150)
+            createColumn("Período", "periodo", 200),
+            createColumn("Cantidad Ventas", "cantidadVentas", 150),
+            createColumn("Total", "totalVentas", 150)
         );
 
         ComboBox<String> periodCombo = new ComboBox<>(FXCollections.observableArrayList("Diario", "Semanal", "Mensual", "Anual"));
@@ -388,7 +604,25 @@ public class JavaFXApp extends Application {
             table.getItems().setAll(reporte);
         });
 
-        HBox controls = new HBox(10, new Label("Período:"), periodCombo, generate);
+        Button invBtn = new Button("Reporte Inventario");
+        invBtn.setOnAction(ev -> {
+            List<com.tienda.reporte.ReporteModel> inv = reporteDAO.reporteInventario();
+            table.getItems().setAll(inv);
+        });
+
+        Button prodById = new Button("Producto por ID");
+        prodById.setOnAction(ev -> {
+            TextInputDialog idD = new TextInputDialog(); idD.setHeaderText("ID producto:");
+            idD.showAndWait().ifPresent(idStr -> { try { int id = Integer.parseInt(idStr.trim()); com.tienda.reporte.ReporteModel r = new com.tienda.reporte.ReporteDAO().productoVendidoPorId(id); if (r != null) table.getItems().setAll(r); else new Alert(AlertType.INFORMATION, "Sin resultados").show(); } catch (Exception ex) { new Alert(AlertType.ERROR, "ID inválido").show(); } });
+        });
+
+        Button byCat = new Button("Productos por categoría");
+        byCat.setOnAction(ev -> {
+            TextInputDialog catD = new TextInputDialog(); catD.setHeaderText("Categoría (parcial):");
+            catD.showAndWait().ifPresent(cat -> table.getItems().setAll(new com.tienda.reporte.ReporteDAO().productosVendidosPorCategoria(cat)));
+        });
+
+        HBox controls = new HBox(10, new Label("Período:"), periodCombo, generate, invBtn, prodById, byCat);
         controls.setPadding(new Insets(0, 0, 10, 0));
 
         VBox main = new VBox(10, controls, table);

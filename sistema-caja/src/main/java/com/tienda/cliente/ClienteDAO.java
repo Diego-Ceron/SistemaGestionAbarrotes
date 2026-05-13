@@ -85,6 +85,21 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
+    public void eliminar(int id) {
+        if (conn == null) {
+            System.out.println("No hay conexión a la base de datos. No se puede eliminar cliente.");
+            return;
+        }
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
+        }
+    }
+
+    @Override
     public List<ClienteModel> listarFrecuentes() {
         // Clientes frecuentes = los que más compras tienen
         String sql = "SELECT c.id, c.nombre, c.direccion, c.telefono, c.email " +

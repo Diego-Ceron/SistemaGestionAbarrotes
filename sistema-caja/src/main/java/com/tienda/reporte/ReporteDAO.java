@@ -62,7 +62,7 @@ public class ReporteDAO {
 
     public ReporteModel productoVendidoPorId(int productoId) {
         if (conn == null) return null;
-        String sql = "SELECT p.id, p.nombre, SUM(vi.cantidad) as totalVendido, SUM(vi.cantidad * vi.precio_unitario) as totalVenta " +
+        String sql = "SELECT p.id, p.nombre, p.categoria, SUM(vi.cantidad) as totalVendido, SUM(vi.cantidad * vi.precio_unitario) as totalVenta " +
                 "FROM venta_item vi JOIN producto p ON p.id = vi.producto_id WHERE p.id = ? GROUP BY p.id";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, productoId);
@@ -70,7 +70,8 @@ public class ReporteDAO {
                 if (rs.next()) {
                     ReporteModel r = new ReporteModel();
                     r.setIdReporte(rs.getInt("id"));
-                    r.setCategoria(rs.getString("nombre"));
+                    r.setPeriodo(rs.getString("nombre"));
+                    r.setCategoria(rs.getString("categoria"));
                     r.setCantidadVentas(rs.getInt("totalVendido"));
                     r.setTotalVentas(rs.getDouble("totalVenta"));
                     return r;
@@ -94,8 +95,8 @@ public class ReporteDAO {
                 while (rs.next()) {
                     ReporteModel r = new ReporteModel();
                     r.setIdReporte(rs.getInt("id"));
-                    r.setCategoria(rs.getString("nombre"));
-                    r.setPeriodo(rs.getString("categoria"));
+                    r.setPeriodo(rs.getString("nombre"));
+                    r.setCategoria(rs.getString("categoria"));
                     r.setCantidadVentas(rs.getInt("totalVendido"));
                     r.setTotalVentas(rs.getDouble("totalVenta"));
                     lista.add(r);
@@ -116,8 +117,8 @@ public class ReporteDAO {
             while (rs.next()) {
                 ReporteModel r = new ReporteModel();
                 r.setIdReporte(rs.getInt("id"));
-                r.setCategoria(rs.getString("nombre"));
-                r.setPeriodo(rs.getString("categoria"));
+                r.setPeriodo(rs.getString("nombre"));
+                r.setCategoria(rs.getString("categoria"));
                 r.setCantidadVentas(rs.getInt("cantidad"));
                 lista.add(r);
             }

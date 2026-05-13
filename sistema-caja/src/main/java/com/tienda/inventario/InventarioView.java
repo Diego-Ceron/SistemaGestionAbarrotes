@@ -121,4 +121,57 @@ public class InventarioView {
     public void mostrarError(String mensaje) {
         System.out.println("[ERROR] " + mensaje);
     }
+
+    // Menú interactivo de inventario para agregar/editar/eliminar productos y registrar movimientos
+    public void mostrarMenu(Scanner scanner, MovimientoController controller) {
+        boolean running = true;
+        while (running) {
+            System.out.println("\n--- Inventario ---");
+            System.out.println("1) Listar productos");
+            System.out.println("2) Agregar producto");
+            System.out.println("3) Editar producto");
+            System.out.println("4) Eliminar producto");
+            System.out.println("5) Registrar movimiento");
+            System.out.println("6) Ver historial de movimientos por producto");
+            System.out.println("0) Volver");
+            System.out.print("Opción: ");
+            String opt = scanner.nextLine().trim();
+            switch (opt) {
+                case "1" -> mostrarProductos(controller.listarProductos());
+                case "2" -> {
+                    ProductoModel p = pedirDatosProducto(scanner);
+                    if (p != null) controller.agregarProducto(p);
+                }
+                case "3" -> {
+                    int id = pedirIdProducto(scanner);
+                    if (id > 0) {
+                        ProductoModel existente = controller.listarProductos().stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+                        if (existente == null) { System.out.println("Producto no encontrado."); break; }
+                        System.out.println("Ingrese nuevos datos (dejar vacío para mantener)");
+                        System.out.print("Nombre (actual: " + existente.getNombre() + "): ");
+                        String nombre = scanner.nextLine().trim(); if (!nombre.isEmpty()) existente.setNombre(nombre);
+                        System.out.print("Precio (actual: " + existente.getPrecio() + "): ");
+                        String precio = scanner.nextLine().trim(); if (!precio.isEmpty()) try { existente.setPrecio(Double.parseDouble(precio)); } catch (NumberFormatException e) {}
+                        System.out.print("Cantidad (actual: " + existente.getCantidad() + "): ");
+                        String cant = scanner.nextLine().trim(); if (!cant.isEmpty()) try { existente.setCantidad(Integer.parseInt(cant)); } catch (NumberFormatException e) {}
+                        controller.actualizarProducto(existente);
+                    }
+                }
+                case "4" -> {
+                    int id = pedirIdProducto(scanner);
+                    if (id > 0) controller.eliminarProducto(id);
+                }
+                case "5" -> {
+                    MovimientoInventarioModel m = pedirDatosMovimiento(scanner);
+                    if (m != null) controller.registrarMovimiento(m);
+                }
+                case "6" -> {
+                    int id = pedirIdProducto(scanner);
+                    if (id > 0) mostrarHistorialMovimientos(id, controller.verHistorialMovimientos(id));
+                }
+                case "0" -> running = false;
+                default -> System.out.println("Opción inválida");
+            }
+        }
+    }
 }

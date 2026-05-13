@@ -10,4 +10,5 @@ public interface IClienteDAO {
     List<ClienteModel> listarFrecuentes();
     List<ClienteModel> listarTodos();
     int contarVentasMes(int clienteId);
+    void eliminar(int id);
 }

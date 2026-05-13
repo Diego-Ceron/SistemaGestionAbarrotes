@@ -1,35 +1,35 @@
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/App.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/cliente/ClienteController.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/cliente/ClienteDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/cliente/ClienteModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/cliente/ClienteView.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/cliente/IClienteDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/inventario/IMovimientoDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/inventario/InventarioView.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/inventario/MovimientoController.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/inventario/MovimientoDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/inventario/MovimientoInventarioModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/metodoPago/IMetodoPago.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/metodoPago/PagoEfectivo.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/metodoPago/PagoTarjeta.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/producto/BuscarProductoService.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/producto/IProductoDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/producto/ProductoDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/producto/ProductoModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/promocion/IPromocionDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/promocion/PromocionController.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/promocion/PromocionDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/promocion/PromocionModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/promocion/PromocionView.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/reporte/ReporteController.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/reporte/ReporteDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/reporte/ReporteModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/reporte/ReporteView.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/ui/JavaFXApp.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/ui/MainView.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/util/ConexionDB.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/venta/IVentaDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/venta/VentaController.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/venta/VentaDAO.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/venta/VentaModel.java
-/home/christian/Imágenes/SistemaGestionAbarrotes/sistema-caja/src/main/java/com/tienda/venta/VentaView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\App.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\cliente\ClienteController.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\cliente\ClienteDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\cliente\ClienteModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\cliente\ClienteView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\cliente\IClienteDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\inventario\IMovimientoDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\inventario\InventarioView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\inventario\MovimientoController.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\inventario\MovimientoDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\inventario\MovimientoInventarioModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\metodoPago\IMetodoPago.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\metodoPago\PagoEfectivo.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\metodoPago\PagoTarjeta.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\producto\BuscarProductoService.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\producto\IProductoDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\producto\ProductoDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\producto\ProductoModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\promocion\IPromocionDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\promocion\PromocionController.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\promocion\PromocionDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\promocion\PromocionModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\promocion\PromocionView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\reporte\ReporteController.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\reporte\ReporteDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\reporte\ReporteModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\reporte\ReporteView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\ui\JavaFXApp.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\ui\MainView.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\util\ConexionDB.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\venta\IVentaDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\venta\VentaController.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\venta\VentaDAO.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\venta\VentaModel.java
+C:\Users\diera\Documents\FMAT\4to semestre\Diseño de software\SistemaGestionAbarrotes\sistema-caja\src\main\java\com\tienda\venta\VentaView.java

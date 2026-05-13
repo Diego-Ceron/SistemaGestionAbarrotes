@@ -9,8 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javafx.application.Application;
 import com.tienda.ui.JavaFXApp;
+
+import javafx.application.Application;
 
 public class App {
     public static void main(String[] args) {
@@ -32,8 +33,6 @@ public class App {
             }
 
             ensureVentaTarjetaColumn(conn);
-            seedSampleData(conn);
-            System.out.println("Datos de muestra insertados/actualizados.");
 
             File dbFile = new File("data/tienda.db");
             System.out.println("Ruta de la BD: " + dbFile.getAbsolutePath());

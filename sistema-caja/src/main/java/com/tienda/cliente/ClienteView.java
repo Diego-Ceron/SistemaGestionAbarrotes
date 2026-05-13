@@ -1,6 +1,7 @@
 package com.tienda.cliente;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class ClienteView {
 
@@ -59,5 +60,80 @@ public class ClienteView {
     // Mensaje de éxito o error genérico
     public void mostrarMensaje(String mensaje) {
         System.out.println("[INFO] " + mensaje);
+    }
+    // Pide datos para crear o actualizar cliente
+    public ClienteModel pedirDatosCliente(Scanner scanner) {
+        ClienteModel c = new ClienteModel();
+        System.out.print("Nombre   : "); c.setNombre(scanner.nextLine().trim());
+        System.out.print("Email    : "); c.setEmail(scanner.nextLine().trim());
+        System.out.print("Teléfono : "); c.setTelefono(scanner.nextLine().trim());
+        System.out.print("Dirección: "); c.setDireccion(scanner.nextLine().trim());
+        return c;
+    }
+
+    public int pedirIdCliente(Scanner scanner) {
+        System.out.print("ID del cliente: ");
+        try { return Integer.parseInt(scanner.nextLine().trim()); } catch (NumberFormatException e) {
+            System.out.println("ID inválido."); return -1;
+        }
+    }
+
+    // Menú interactivo para CRUD de clientes
+    public void mostrarMenu(Scanner scanner, ClienteController controller) {
+        boolean running = true;
+        while (running) {
+            System.out.println("\n--- Clientes ---");
+            System.out.println("1) Listar todos");
+            System.out.println("2) Ver cliente por ID");
+            System.out.println("3) Registrar cliente");
+            System.out.println("4) Actualizar cliente");
+            System.out.println("5) Eliminar cliente");
+            System.out.println("0) Volver");
+            System.out.print("Opción: ");
+            String opt = scanner.nextLine().trim();
+            switch (opt) {
+                case "1" -> {
+                    List<ClienteModel> lista = controller.listarTodos();
+                    if (lista == null || lista.isEmpty()) System.out.println("No hay clientes.");
+                    else lista.forEach(this::mostrarCliente);
+                }
+                case "2" -> {
+                    int id = pedirIdCliente(scanner);
+                    if (id > 0) mostrarCliente(controller.buscarCliente(id));
+                }
+                case "3" -> {
+                    ClienteModel c = pedirDatosCliente(scanner);
+                    controller.registrarCliente(c);
+                    mostrarMensaje("Cliente registrado con ID: " + c.getId());
+                }
+                case "4" -> {
+                    int id = pedirIdCliente(scanner);
+                    if (id > 0) {
+                        ClienteModel existente = controller.buscarCliente(id);
+                        if (existente == null) { System.out.println("Cliente no encontrado."); break; }
+                        System.out.println("Ingrese nuevos datos (dejar vacío para mantener)");
+                        System.out.print("Nombre (actual: " + existente.getNombre() + "): ");
+                        String nombre = scanner.nextLine().trim(); if (!nombre.isEmpty()) existente.setNombre(nombre);
+                        System.out.print("Email (actual: " + existente.getEmail() + "): ");
+                        String email = scanner.nextLine().trim(); if (!email.isEmpty()) existente.setEmail(email);
+                        System.out.print("Teléfono (actual: " + existente.getTelefono() + "): ");
+                        String tel = scanner.nextLine().trim(); if (!tel.isEmpty()) existente.setTelefono(tel);
+                        System.out.print("Dirección (actual: " + existente.getDireccion() + "): ");
+                        String dir = scanner.nextLine().trim(); if (!dir.isEmpty()) existente.setDireccion(dir);
+                        controller.actualizarCliente(existente);
+                        mostrarMensaje("Cliente actualizado.");
+                    }
+                }
+                case "5" -> {
+                    int id = pedirIdCliente(scanner);
+                    if (id > 0) {
+                        controller.eliminarCliente(id);
+                        mostrarMensaje("Cliente eliminado (si existía).");
+                    }
+                }
+                case "0" -> running = false;
+                default -> System.out.println("Opción inválida");
+            }
+        }
     }
 }
