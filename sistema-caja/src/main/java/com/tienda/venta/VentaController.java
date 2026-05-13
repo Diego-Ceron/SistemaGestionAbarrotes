@@ -55,11 +55,20 @@ public class VentaController {
             System.out.println(
                     p.getNombre() +
                             " x" + p.getCantidad() +
-                            " = $" + (p.getPrecio() * p.getCantidad())
+                            " = $" + String.format("%.2f", p.getPrecio() * p.getCantidad())
             );
         }
 
-        System.out.println("Total: $" + calcularTotal(v));
+        System.out.println("Total: $" + String.format("%.2f", calcularTotal(v)));
+        if (v.getMetodoPago() != null) {
+            System.out.println("Método de pago: " + v.getMetodoPago());
+            if (v.getMetodoPago().equalsIgnoreCase("Efectivo")) {
+                System.out.println("Monto recibido: $" + String.format("%.2f", v.getMontoPagado()));
+                System.out.println("Cambio: $" + String.format("%.2f", v.getCambio()));
+            } else if (v.getMetodoPago().equalsIgnoreCase("Tarjeta")) {
+                System.out.println("Tarjeta: " + v.getNumeroTarjeta());
+            }
+        }
         System.out.println("==================");
     }
 }

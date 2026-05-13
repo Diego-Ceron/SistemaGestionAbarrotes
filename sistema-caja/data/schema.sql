@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS venta (
     total REAL DEFAULT 0.0,
     cliente_id INTEGER,
     metodo_pago TEXT,
+    numero_tarjeta TEXT,
     FOREIGN KEY (cliente_id) REFERENCES cliente(id) ON DELETE SET NULL
 );
 

@@ -79,7 +79,7 @@ public class VentaDAO implements IVentaDAO {
         }
         v.setTotal(totalCalc);
 
-        String insVenta = "INSERT INTO venta (fecha, total, cliente_id, metodo_pago) VALUES (?,?,?,?)";
+        String insVenta = "INSERT INTO venta (fecha, total, cliente_id, metodo_pago, numero_tarjeta) VALUES (?,?,?,?,?)";
         String insItem = "INSERT INTO venta_item (venta_id, producto_id, cantidad, precio_unitario, descuento) VALUES (?,?,?,?,?)";
 
         try {
@@ -95,8 +95,9 @@ public class VentaDAO implements IVentaDAO {
             try (PreparedStatement ps = conn.prepareStatement(insVenta, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, fechaStr);
                 ps.setDouble(2, v.getTotal());
-                ps.setObject(3, null); // cliente_id no disponible actualmente
-                ps.setString(4, null);
+                ps.setObject(3, v.getClienteId());
+                ps.setString(4, v.getMetodoPago());
+                ps.setString(5, v.getNumeroTarjeta());
                 ps.executeUpdate();
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) {

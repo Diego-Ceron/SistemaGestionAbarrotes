@@ -11,7 +11,7 @@ public class ReporteController {
     }
 
     public List<ReporteModel> reporteInventario() {
-        return ReporteModel.reporteInventario();
+        return reporteDAO.reporteInventario();
     }
 
     public ReporteModel productoPorId(int id) {

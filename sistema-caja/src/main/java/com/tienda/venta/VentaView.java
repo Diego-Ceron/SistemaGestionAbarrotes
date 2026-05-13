@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import com.tienda.cliente.ClienteDAO;
 import com.tienda.cliente.ClienteModel;
+import com.tienda.metodoPago.PagoEfectivo;
+import com.tienda.metodoPago.PagoTarjeta;
 import com.tienda.producto.ProductoDAO;
 import com.tienda.producto.ProductoModel;
 
@@ -88,6 +90,59 @@ public class VentaView {
         v.setFecha(new Date());
         double total = seleccion.stream().mapToDouble(p -> p.getPrecio() * p.getCantidad()).sum();
         v.setTotal(total);
+
+        if (seleccion.isEmpty()) {
+            System.out.println("No se puede registrar una venta sin productos.");
+            return null;
+        }
+
+        // Selección de método de pago
+        while (true) {
+            System.out.println("Seleccione método de pago: 1) Efectivo 2) Tarjeta");
+            System.out.print("Opción: ");
+            String optPago = scanner.nextLine().trim();
+            if (optPago.equals("1")) {
+                v.setMetodoPago("Efectivo");
+                PagoEfectivo pago = new PagoEfectivo();
+                while (true) {
+                    System.out.print("Monto recibido: ");
+                    try {
+                        double montoRecibido = Double.parseDouble(scanner.nextLine().trim().replace(',', '.'));
+                        pago.setMontoRecibido(montoRecibido);
+                        if (!pago.procesar(total)) {
+                            System.out.println("Intentar nuevamente con un monto suficiente.");
+                            continue;
+                        }
+                        v.setMontoPagado(montoRecibido);
+                        v.setCambio(pago.calcularCambio(total));
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Monto inválido.");
+                    }
+                }
+                break;
+            } else if (optPago.equals("2")) {
+                v.setMetodoPago("Tarjeta");
+                PagoTarjeta pago = new PagoTarjeta();
+                while (true) {
+                    System.out.print("Número de tarjeta: ");
+                    String numero = scanner.nextLine().trim();
+                    pago.setNumTarjeta(numero);
+                    if (!pago.procesar(total)) {
+                        System.out.println("Número de tarjeta inválido. Intente de nuevo.");
+                        continue;
+                    }
+                    v.setNumeroTarjeta(numero);
+                    v.setMontoPagado(total);
+                    v.setCambio(0.0);
+                    break;
+                }
+                break;
+            } else {
+                System.out.println("Método de pago inválido. Seleccione 1 o 2.");
+            }
+        }
+
         return v;
     }
 

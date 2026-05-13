@@ -8,4 +8,6 @@ public interface IClienteDAO {
     ClienteModel buscarPorTelefono(String telefono);
     void actualizar(ClienteModel c);
     List<ClienteModel> listarFrecuentes();
+    List<ClienteModel> listarTodos();
+    int contarVentasMes(int clienteId);
 }

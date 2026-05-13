@@ -106,4 +106,24 @@ public class ReporteDAO {
         }
         return lista;
     }
+
+    public List<ReporteModel> reporteInventario() {
+        List<ReporteModel> lista = new ArrayList<>();
+        if (conn == null) return lista;
+        String sql = "SELECT id, nombre, cantidad, categoria FROM producto ORDER BY nombre";
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ReporteModel r = new ReporteModel();
+                r.setIdReporte(rs.getInt("id"));
+                r.setCategoria(rs.getString("nombre"));
+                r.setPeriodo(rs.getString("categoria"));
+                r.setCantidadVentas(rs.getInt("cantidad"));
+                lista.add(r);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en ReporteDAO.reporteInventario: " + e.getMessage());
+        }
+        return lista;
+    }
 }
