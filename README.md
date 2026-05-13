@@ -85,6 +85,12 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ### Diagrama de Actividad
 ![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
 
+### Diagrama de Estados
+![Diagrama de Estados](docs/uml/imagenes/DiagramaEstados.png)
+
+### Diagrama de Comunicación
+![Diagrama de Comunicación](docs/uml/imagenes/DiagramaComunicacion.png)
+
 ### Diagrama de Secuencia
 Se encuentra dentro del proyecto asta
 
