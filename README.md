@@ -83,7 +83,7 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ![Diagrama de Clases Venta](docs/uml/imagenes/Diagramavistasycontroladores.png)
 
 ### Diagrama de Actividad
-![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
+![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividadFinal.png)
 
 ### Diagrama de Estados
 ![Diagrama de Estados](docs/uml/imagenes/DiagramaEstados.png)
