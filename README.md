@@ -4,6 +4,19 @@
 
 Es una aplicación de software que permite a una tienda de abarrotes gestionar sus operaciones de manera efectiva. Brinda una solución completa para las actividades diarias de la tienda, mejorando la eficiencia, la precisión y la toma de decisiones comerciales.
 
+
+## Integrantes
+
+Diego Barak Cerón Rodríguez
+
+Oscar de la Rosa García
+
+Miranda Gissel Rodríguez Shiu
+
+Jarib Alberto Novelo Hernández
+
+Christian Alexander Vargas Llanes
+
 ## Requisitos funcionales 📌
 
 ### Gestión de inventario 📦
@@ -74,16 +87,22 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ![Diagrama de Casos de Uso](docs/uml/imagenes/DiagramaCasosUso.png)
 
 ### Diagrama de Clases
-![Diagrama de Clases](docs/uml/imagenes/DiagramaClase.png)
+![Diagrama de Clases](docs/uml/imagenes/Diagramamodelos.png)
 
 ### Diagrama de Clases (Base de Datos)
-![Diagrama de Clases DB](docs/uml/imagenes/DiagramaClaseDB.png)
+![Diagrama de Clases DB](docs/uml/imagenes/Diagramabasededatos.png)
 
 ### Diagrama de Clases de Venta
-![Diagrama de Clases Venta](docs/uml/imagenes/DiagramaClaseVenta.png)
+![Diagrama de Clases Venta](docs/uml/imagenes/Diagramavistasycontroladores.png)
 
 ### Diagrama de Actividad
-![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
+![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividadFinal.png)
+
+### Diagrama de Estados
+![Diagrama de Estados](docs/uml/imagenes/DiagramaEstados.png)
+
+### Diagrama de Comunicación
+![Diagrama de Comunicación](docs/uml/imagenes/DiagramaComunicacion.png)
 
 ### Diagrama de Secuencia
 Se encuentra dentro del proyecto asta
