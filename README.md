@@ -4,6 +4,19 @@
 
 Es una aplicación de software que permite a una tienda de abarrotes gestionar sus operaciones de manera efectiva. Brinda una solución completa para las actividades diarias de la tienda, mejorando la eficiencia, la precisión y la toma de decisiones comerciales.
 
+
+## Integrantes
+
+Diego Barak Cerón Rodríguez
+
+Oscar de la Rosa García
+
+Miranda Gissel Rodríguez Shiu
+
+Jarib Alberto Novelo Hernández
+
+Christian Alexander Vargas Llanes
+
 ## Requisitos funcionales 📌
 
 ### Gestión de inventario 📦
