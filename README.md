@@ -74,13 +74,13 @@ Es una aplicación de software que permite a una tienda de abarrotes gestionar s
 ![Diagrama de Casos de Uso](docs/uml/imagenes/DiagramaCasosUso.png)
 
 ### Diagrama de Clases
-![Diagrama de Clases](docs/uml/imagenes/DiagramaClase.png)
+![Diagrama de Clases](docs/uml/imagenes/Diagramamodelos.png)
 
 ### Diagrama de Clases (Base de Datos)
-![Diagrama de Clases DB](docs/uml/imagenes/DiagramaClaseDB.png)
+![Diagrama de Clases DB](docs/uml/imagenes/Diagramabasededatos.png)
 
 ### Diagrama de Clases de Venta
-![Diagrama de Clases Venta](docs/uml/imagenes/DiagramaClaseVenta.png)
+![Diagrama de Clases Venta](docs/uml/imagenes/Diagramavistasycontroladores.png)
 
 ### Diagrama de Actividad
 ![Diagrama de Actividad](docs/uml/imagenes/DiagramaActividad.png)
